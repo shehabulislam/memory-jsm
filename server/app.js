@@ -10,11 +10,11 @@ config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use("/posts", postRoutes);
 app.use(cors());
 app.use(express.json({ limit: "5MB" }));
 
 //routes
+app.use("/posts", postRoutes);
 
 app.get("/", (req, res) => {
   res.send("server is running");
