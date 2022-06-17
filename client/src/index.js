@@ -2,13 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 // import reportWebVitals from "./reportWebVitals";
+import "./index.css";
 
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-import reducers from "./reducers";
+// import reducers from "./reducers";
+// import { store } from "./store/configureStore";
 
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
+// const store = configureStore({ reducers });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
