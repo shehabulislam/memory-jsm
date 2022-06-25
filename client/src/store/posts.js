@@ -1,29 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import { questions } from "./../assets/data/data";
+// import axios from "axios";
 
 const postSlice = createSlice({
   name: "posts",
   initialState: [],
   reducers: {
-    questionAdded: (questions, action) => {
-      questions.push(action.payload);
+    postAdd: (posts, action) => {
+      posts.push(action.payload);
     },
-    questionUpdated: (questions, action) => {
-      return questions.map((item) => (item.id === action.payload?.id ? action.payload : item));
+    postUpdate: (posts, action) => {
+      return posts.map((post) => (post._id === action.payload?._id ? action.payload : post));
     },
-    questionDeleted: (questions, action) => {
-      console.log(action);
-      return questions.filter((item) => item.id !== action.payload);
+    postDelete: (posts, action) => {
+      return posts.filter((post) => post._id !== action.payload);
     },
-    populateQuestions: (questions, action) => {
+    populatePosts: (posts, action) => {
       return action.payload;
     },
   },
 });
 
-export const getQuestions = (state) => {
-  return state.questions;
+export const getPosts = (state) => {
+  return state.posts;
 };
 
-export const { questionAdded, questionUpdated, questionDeleted, populateQuestions } = postSlice.actions;
+export const { postAdd, postUpdate, postDelete, populatePosts } = postSlice.actions;
 export default postSlice.reducer;

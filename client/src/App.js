@@ -8,15 +8,19 @@ import { useDispatch } from "react-redux";
 
 import useStyles from "./styles";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import useFetch from "./hooks/useFetch";
+import { populatePosts } from "./store/posts";
 
 function App() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState(null);
+  const { data, loading, posts } = useFetch("http://localhost:5000/posts");
 
   useEffect(() => {
-    dispatch(getPosts());
-  }, [currentId]);
+    dispatch(populatePosts(data));
+  }, [data]);
 
   return (
     <Container maxidth="lg">

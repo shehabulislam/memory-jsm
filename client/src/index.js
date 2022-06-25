@@ -7,11 +7,13 @@ import "./index.css";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-// import reducers from "./reducers";
-// import { store } from "./store/configureStore";
+import reducers from "./reducers";
+import configureStore from "./store/configureStore";
 
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
+// const store = createStore(reducers, compose(applyMiddleware(thunk)));
 // const store = configureStore({ reducers });
+const store = configureStore();
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

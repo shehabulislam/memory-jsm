@@ -1,12 +1,14 @@
+import { populatePosts } from "../store/posts";
 import * as api from "./../api";
 
 api.fetchPosts();
 
 //Action Creators
-export const getPosts = () => async (dispatch) => {
+export const getPosts = async () => {
   try {
     const { data } = await api.fetchPosts();
-    dispatch({ type: "FETCH_ALL", payload: data });
+    populatePosts(data);
+    // dispatch({ type: "FETCH_ALL", payload: data });
   } catch (error) {
     console.log(error.message);
   }

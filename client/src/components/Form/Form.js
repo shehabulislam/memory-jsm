@@ -5,6 +5,8 @@ import { createPost, updatePost } from "../../actions/posts";
 import FileBase from "react-file-base64";
 
 import useStyles from "./styles";
+import { postAdd } from "../../store/posts";
+import axios from "axios";
 const Form = ({ currentId, setCurrentId }) => {
   const classes = useStyles();
   const [postData, setPostData] = useState({ creator: "", title: "", message: "", tags: "", selectedFile: "" });
@@ -17,14 +19,18 @@ const Form = ({ currentId, setCurrentId }) => {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (currentId) {
-      dispatch(updatePost(currentId, postData));
+      // dispatch(updatePost(currentId, postData));
     } else {
-      dispatch(createPost(postData));
+      try {
+        const res = await axios.post("http://localhost:5000/posts", postData);
+        console.log({ res });
+        dispatch(postAdd(res.data));
+      } catch (error) {}
     }
-    clear();
+    // clear();
   };
   const clear = () => {
     setCurrentId(null);

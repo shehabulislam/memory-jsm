@@ -8,10 +8,30 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../../../actions/posts";
+import axios from "axios";
+import { postDelete, postUpdate } from "../../../store/posts";
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/posts/${id}`);
+      dispatch(postDelete(id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleLike = async (id) => {
+    try {
+      const res = await axios.patch(`http://localhost:5000/posts/like/${id}`);
+      dispatch(postUpdate(res.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Card className={classes.card}>
       <CardMedia className={classes.media} image={post.selectedFile} title={post.title}></CardMedia>
@@ -38,10 +58,10 @@ const Post = ({ post, setCurrentId }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary" onClick={() => dispatch(likePost(post._id))}>
+        <Button size="small" color="primary" onClick={() => handleLike(post._id)}>
           <ThumbUpIcon fontSize="small"></ThumbUpIcon>Like {post.likePost}
         </Button>
-        <Button size="small" color="primary" onClick={() => dispatch(deletePost(post._id))}>
+        <Button size="small" color="primary" onClick={() => handleDelete(post._id)}>
           <DeleteIcon fontSize="small"></DeleteIcon>Delete
         </Button>
       </CardActions>
